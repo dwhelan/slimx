@@ -1,0 +1,18 @@
+This [[table table][http://fitnesse.org/FitNesse.UserGuide.SliM.TableTable]] allows you to show classes.
+
+When this is run, it will show the following:
+ * Properties
+ * Constructors <- TBD
+ * Methods <- TBD
+
+You can use a fully qualified class name like this.
+
+!|table: show class|java.util.Locale|
+
+Or you can use short class names if it has been imported via the [[Import System][ImportClasses]] table.
+
+!|table:show class|string|
+
+If you don't specify a class name then all imported classes will be shown:
+
+!|table:show class|

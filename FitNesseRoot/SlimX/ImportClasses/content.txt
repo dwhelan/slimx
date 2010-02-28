@@ -1,0 +1,48 @@
+This [[table table][http://fitnesse.org/FitNesse.UserGuide.SliM.TableTable]] allows you to specify package names to search for variable classes if they are not fully qualified.
+This allows your acceptance tests to be more readable.
+
+This table will search files and jars specified in the class path for public concrete classes. It will output a row for each class imported so you can see exactly what was imported.
+
+The first cell in each row of the table specifies a package name to import for searching for system variable classes.
+The second cell in each row is optional and specifies a specific class in the package to import.
+!3 Load all classes from a package
+This table will import all classes in the ''jfitnesse.slim'' package.
+
+!|table:import classes|
+|fitnesse.slim|
+!3 Load some classes from a package
+If you want to specify multiple classes in the package you can leave the first cell blank and the previous package name will be used.
+
+!|table:import classes|
+|fitnesse.slim|ConverterSupport|
+||ConverterTest|
+
+You cannot import all classes in package that are loaded with the Java VM. You must explicitly specify the classes to load.
+
+For example:
+
+Instead of this:
+
+|comment|
+|table:import classes|
+|java.lang|
+
+Do this:
+
+|table:import classes|
+|java.lang|String|
+
+!3 Unloading classes
+You can unload a specific class using a ''-'' prefix before the class name:
+
+!|table:import classes|
+|fitnesse.slim|-ConverterSupport|
+
+You can unload all classes in package by using a ''-'' prefix package name:
+
+!|table:import classes|
+|-fitnesse.slim|
+
+!3 Showing all imported classes
+If you do not specify any classes to be imported then the table will show you all imported classes.
+!|table:import classes|

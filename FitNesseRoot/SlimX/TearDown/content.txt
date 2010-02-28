@@ -1,0 +1,3 @@
+!|table:import classes|
+|fitnesse.slimx.reflection.examples|-Sample|
+|java.lang|-String|

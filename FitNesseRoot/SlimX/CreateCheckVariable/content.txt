@@ -1,0 +1,21 @@
+This [[script][http://fitnesse.org/FitNesse.UserGuide.SliM.ScriptTable]] table allows you to generate the contents for a [[Check Variable][CheckVariable] table for a variable.
+
+You would you this is if you were using a [[Show Variable][Show Variable]] table and wanted to convert the table into a [[Check Variable][CheckVariable] so that the results would be verified.
+You may find this useful if you want to automate an exploratory test or if you want to generate characterization tests.
+
+The cell that follow '''create check object''' specifies the variable that you want to check.
+
+When executed a cell will be generated that contains the generated wiki text for checking the variable with instructions on how to use it.
+
+|table:show variable|$foo|
+|field 1|field 2|
+
+Hmmm that looks right, now I would like to create a regression test for that.
+
+If I want to check all the properties I would change the word ''show'' in the above table to ''create check'' like this:
+
+|table:create check variable|$foo|
+|field 1|field 2|
+
+|table:create check variable|$fooBar|elements|
+|field 1|field 2|

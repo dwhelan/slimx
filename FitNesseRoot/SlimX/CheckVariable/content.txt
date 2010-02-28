@@ -1,0 +1,12 @@
+This [[query table][http://fitnesse.org/FitNesse.UserGuide.SliM.QueryTable]] allows you to check that the values of fields are as expected.
+
+|query:check variable|$foo|
+|field 1|field 2|
+|foo|0.0|
+
+If the variable is a list and you want to check elements of the list rather than the list itself then add a cell called ''elements'' like this:
+
+|query:check variable|$fooBar|elements|
+|field 1|field 2|
+|foo|0.0|
+|bar|0.0|

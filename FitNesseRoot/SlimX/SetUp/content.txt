@@ -1,0 +1,13 @@
+!|Import|
+|fitnesse.slimx.fixtures|
+
+!|table:import classes|
+|fitnesse.slimx.reflection.examples|Sample|
+|java.lang|String|
+
+!|script|create variable|
+|$foo=|create;|Sample|foo|
+|$bar=|create;|Sample|bar|
+|$fooBar=|create|java.util.ArrayList|
+|add|$foo|
+|add|$bar|
