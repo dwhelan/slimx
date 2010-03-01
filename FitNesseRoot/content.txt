@@ -1,12 +1,9 @@
 !3 ''Classpath''
-There should be no reason to edit the class path - update the drive-sync-fitnesse pom.xml for the new dependency instead.
+!-SlimX currently modifies a few FitNesse classes so it must be in the path before the FitNesse jar:-!
 
-!-Any classes here should be specifically related to FitNesse-!
-
+!path ..\slimx\classes
+!path ..\slimx\lib\fitnesse-20100103.jar
 !3 ''Variables''
 !define TEST_SYSTEM {slim}
-
-!-Add a -v argument to the line below to enable debug content in the FitNesse output-!
-!define COMMAND_PATTERN {java -Dspring.context=classpath:applicationContext-test.xml -cp %p %m}
-!define SLIM_PORT {8091}
+!define SLIM_PORT {8092}
 

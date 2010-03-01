@@ -1,4 +1,13 @@
-|FrontPage||21:27:26 Sat, Feb 27, 2010|
+|||24:45:10 Mon, Mar 01, 2010|
+|SlimX.ImportClasses||24:43:52 Mon, Mar 01, 2010|
+|SlimX.SetUp||24:31:37 Mon, Mar 01, 2010|
+|FrontPage||24:27:51 Mon, Mar 01, 2010|
+|SlimX||24:15:47 Mon, Mar 01, 2010|
+|SlimX.ShowVariable||23:07:10 Sun, Feb 28, 2010|
+|SlimX.CreateCheckVariable||20:31:57 Sun, Feb 28, 2010|
+|SlimX.AccessVariable||19:59:48 Sun, Feb 28, 2010|
+|SlimX.CreateVariable||19:57:26 Sun, Feb 28, 2010|
+|SlimX.CheckVariable||19:46:09 Sun, Feb 28, 2010|
 |DriveSyncAcceptanceTests.SupportTables||17:55:39 Sat, Feb 27, 2010|
 |DriveSyncAcceptanceTests.SupportTables.TearDown||17:53:10 Sat, Feb 27, 2010|
 |DriveSyncAcceptanceTests.SupportTables.SetUp||17:51:37 Sat, Feb 27, 2010|

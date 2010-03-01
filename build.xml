@@ -1,0 +1,52 @@
+<project name="SlimX" default="all" basedir=".">
+  <description>
+    SlimX is a Fitnesse FitNesse extension that supports fixture free acceptance tests.
+  </description>
+
+  <path id="classpath">
+    <pathelement path="classes" />
+    <fileset dir="lib">
+      <include name="*.jar" />
+      <exclude name="dummy.jar" />
+    </fileset>
+  </path>
+
+  <target name="init">
+    <mkdir dir="classes" />
+    <mkdir dir="test-results" />
+  </target>
+
+  <target name="all" depends="unit_tests" description="Run this target any time you change code or acceptance tests. It will clean, then compile the source, run all the unit test and fitnesse acceptance tests." />
+
+  <target name="build" depends="clean, compile" description="clean, then compile the source" />
+
+  <target name="compile" depends="init" description="compile the source (make)">
+    <javac srcdir="src" destdir="classes" classpathref="classpath" debug="true" compiler="javac1.6" />
+  </target>
+
+  <target name="clean" description="delete everything in the classes directory">
+    <delete dir="classes" />
+    <mkdir dir="classes" />
+    <delete dir="test-results" />
+  </target>
+
+  <target name="unit_tests" depends="compile" description="builds code from scratch, runs all the unit tests">
+    <junit forkmode="once" fork="yes" printsummary="no" haltonfailure="yes" haltonerror="yes" dir="${basedir}">
+      <classpath refid="classpath" />
+      <formatter type="xml" usefile="true" />
+      <formatter type="plain" usefile="false" />
+      <batchtest todir="test-results">
+        <fileset dir="src/main/java">
+          <include name="**/*Test.java" />
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="acceptance_tests" description="Executes the SlimX Acceptance Test Suite. This target starts fitnesse, executes the  Accetpance test suite, publishes the test results and stops fitnesse">
+    <taskdef classpathref="classpath" resource="tasks.properties" />
+    <run-fitnesse-tests wikidirectoryrootpath="${basedir}" suitepage="SlimX" fitnesseport="8092" resultsdir="test-results" resultsxmlpage="fit-results.xml" classpathref="classpath" />
+  </target>
+
+  <target name="release" depends="unit_tests, acceptance_tests" />
+</project>

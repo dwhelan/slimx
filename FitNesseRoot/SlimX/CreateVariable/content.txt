@@ -1,39 +1,24 @@
 This [[script][http://fitnesse.org/FitNesse.UserGuide.SliM.ScriptTable]] table allows you to create variables of any class.
 
-The cell that follow ''create'' specifies the class name of the variable that you want to create.
+The cell that follow ''create'' specifies the class name of the variable that you want to create. Any subsequent cells are in the row are used as arguments in the constructor. 
+If the constructor has any arguments then the ''create'' cell must have a semi-colon like this: ''create;'' so that Slim does not interpret the cells as contributing to the ''create'' function.
 
 You can specify a fully qualified class name like ''java.lang.String''. A more convenient mechanism is to import system paths to search using the [[Import Classes][ImportClasses]] table in a !-Setup-! or !-SetUpSuite-! page. See the [[Set Up][SetUp]] for the  [[Import Classes][ImportClasses]] used to import ''java.lang.String''.
-
-The ''create'' function can used to create variables with subsequent cells in the row used to specify arguments to pass to the constructor.
-!3 Creating a variable using a constructor with no arguments
+!3 Creating variables
 The example below is equivalent to the java code:
-{{{new String();}}}|script|create variable|
-|create|string|
-!3 Creating a variable using a fully qualified class name
-The example below is equivalent to the java code:
-{{{new java.lang.String();}}}|script|create variable|
-|create|java.lang.String|
-!3 Creating a variable using a constructor with arguments
-The example below is equivalent to the java code:
-{{{new String("foo");}}}|script|create variable|
-|create;|string|foo|
-!3 Assigning the new variable to a variable
-The example below is equivalent to the java code:
-{{{String x = new String("foo");}}}|script|create variable|
+{{{String x = new String("foo");
+String y = new String();
+String z = new java.lang.String();}}}|script|create variable|
 |$x=|create;|string|foo|
+|$y=|create;|string|
+|$z=|create;|java.lang.String|
 
 You can then use the new variable in other tables:
 
 |table:show variable|$x|
-!3 Creating multiple variables
-The example below is equivalent to the java code:
-{{{new String("foo");
-new String("bar");}}}|script|create variable|
-|create;|string|foo|
-|create;|string|bar|
 !3 Calling functions on the new variable
 The table will set the ''System Under Test'' to be the most recently created variable so you can call any public function on that variable just as in any other script table.
 
 |script|create variable|
-|create;|string|foo|
+|$x=|create;|string|foo|
 |check|length|3|

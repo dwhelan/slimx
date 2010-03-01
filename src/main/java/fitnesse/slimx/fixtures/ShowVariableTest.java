@@ -1,7 +1,9 @@
 package fitnesse.slimx.fixtures;
 
-import static fitnesse.slimx.reflection.TestUtil.assertRow;
-import static org.junit.Assert.assertEquals;
+import static fitnesse.slimx.reflection.TableUtil.error;
+import static fitnesse.slimx.reflection.TableUtil.report;
+import static fitnesse.slimx.reflection.TestUtil.assertTable;
+import static util.ListUtility.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,97 +14,83 @@ import org.junit.Test;
 import fitnesse.slimx.reflection.Property;
 import fitnesse.slimx.reflection.examples.Sample;
 
+@SuppressWarnings("unchecked")
 public class ShowVariableTest {
 
-    private static final Object sample = new Sample("value1", 1.0);
-    private static final Object sampleA = new Sample("value1A", 2.0);
-    private static final List<Object> samples = Arrays.asList(sample, sampleA);
+  private static final Object foo = new Sample("foo", 1.0);
 
-    private final ArrayList<List<String>> table = new ArrayList<List<String>>();
+  private final ArrayList<List<String>> table = new ArrayList<List<String>>();
+  private ShowVariable fixture;
 
-    @Test
-    public void should_return_all_properties() {
-        ShowVariable showVariable = new ShowVariable(sample);
+  @Test
+  public void should_return_all_properties() {
+    fixture = new ShowVariable(foo);
 
-        List<List<String>> result = showVariable.doTable(table);
+    assertDoTableResults("report:",
+            list("field 1", "field 2", "class"),
+            list("foo", "1.0", Sample.class.toString()));
+  }
 
-        assertRow("report:", result.get(0), "field 1", "field 2", "class");
-        assertRow("report:", result.get(1), "value1", "1.0", Sample.class.toString());
-    }
+  @Test
+  public void should_only_return_properties_specified() {
+    fixture = new ShowVariable(foo);
+    table.add(list("field 1"));
 
-    @Test
-    public void should_only_return_properties_specified() {
-        ShowVariable showVariable = new ShowVariable(sample);
-        table.add(Arrays.asList("field 1"));
+    assertDoTableResults("report:",
+            list("field 1"),
+            list("foo"));
+  }
 
-        List<List<String>> result = showVariable.doTable(table);
+  @Test
+  public void should_show_invalid_properties_as_errors() {
+    fixture = new ShowVariable(foo);
+    table.add(Arrays.asList("invalid property name"));
 
-        assertRow("report:", result.get(0), "field 1");
-        assertRow("report:", result.get(1), "value1");
-    }
+    assertDoTableResults(
+        "",
+            list(report("invalid property name")),
+            list(error("Method getInvalidPropertyName[0] not found in class fitnesse.slimx.reflection.examples.Sample")));
+  }
 
-    @Test
-    public void should_show_invalid_properties_as_errors() {
-        ShowVariable showVariable = new ShowVariable(sample);
-        table.add(Arrays.asList("invalid property name"));
+  @Test
+  public void should_return_a_single_unknown_column_if_object_is_null() {
+    fixture = new ShowVariable(null);
 
-        List<List<String>> result = showVariable.doTable(table);
+    assertDoTableResults("report:",
+            list(Property.unknownName),
+            list(Property.nullObjectValue));
+  }
 
-        assertRow("report:", result.get(0), "invalid property name");
-        assertRow("error:", result.get(1),
-                "Method getInvalidPropertyName[0] not found in class fitnesse.slimx.reflection.examples.Sample");
-    }
+  @Test
+  public void should_return_a_row_with_all_properties_for_each_object_in_a_list() {
+    Object bar = new Sample("bar", 2.0);
+    List<Object> fooBar = Arrays.asList(foo, bar);
+    fixture = new ShowVariable(fooBar, "elements");
 
-    @Test
-    public void should_return_a_row_with_a_null_object_value_if_object_is_null() {
-        ShowVariable showVariable = new ShowVariable(null);
+    assertDoTableResults("report:",
+            list("field 1", "field 2", "class"),
+            list("foo", "1.0", Sample.class.toString()),
+            list("bar", "2.0", Sample.class.toString()));
+  }
 
-        List<List<String>> result = showVariable.doTable(table);
+  @Test
+  public void should_return_a_single_unknown_column_if_list_is_null() {
+    fixture = new ShowVariable((List<Object>) null, "elements");
 
-        assertEquals(2, result.size());
-        assertRow("report:", result.get(0), Property.unknownName);
-        assertRow("report:", result.get(1), Property.nullObjectValue);
-    }
+    assertDoTableResults("report:",
+            list(Property.unknownName),
+            list(Property.nullObjectValue));
+  }
 
-    @Test
-    public void should_return_all_properties_of_objects_in_list() {
-        ShowVariable showVariable = new ShowVariable(samples, "elements");
+  @Test
+  public void should_return_a_single_unknown_column_if_list_is_empty() {
+    fixture = new ShowVariable(Arrays.asList(), "elements");
 
-        List<List<String>> result = showVariable.doTable(table);
+    assertDoTableResults("report:",
+            list(Property.unknownName));
+  }
 
-        assertRow("report:", result.get(0), "field 1", "field 2", "class");
-        assertRow("report:", result.get(1), "value1", "1.0", Sample.class.toString());
-    }
-
-    @Test
-    public void should_return_a_row_all_properties_for_each_object_in_list() {
-        ShowVariable showVariable = new ShowVariable(samples, "elements");
-
-        List<List<String>> result = showVariable.doTable(table);
-
-        assertEquals(3, result.size());
-        assertRow("report:", result.get(0), "field 1", "field 2", "class");
-        assertRow("report:", result.get(1), "value1", "1.0", Sample.class.toString());
-        assertRow("report:", result.get(2), "value1A", "2.0", Sample.class.toString());
-    }
-
-    @Test
-    public void should_return_rows_with_null_object_values_for_a_null_list() {
-        ShowVariable showVariable = new ShowVariable((List<Object>) null, "elements");
-
-        List<List<String>> result = showVariable.doTable(table);
-
-        assertEquals(2, result.size());
-        assertRow("report:", result.get(0), Property.unknownName);
-        assertRow("report:", result.get(1), Property.nullObjectValue);
-    }
-
-    @Test
-    public void should_only_return_property_names_for_an_empty_list() {
-        ShowVariable showVariable = new ShowVariable(Arrays.asList(), "elements");
-
-        List<List<String>> result = showVariable.doTable(table);
-
-        assertEquals(1, result.size());
-    }
+  private void assertDoTableResults(String prefix, List<String>... expected) {
+    assertTable(prefix, fixture.doTable(table), expected);
+  }
 }

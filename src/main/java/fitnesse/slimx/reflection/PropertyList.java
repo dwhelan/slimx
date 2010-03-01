@@ -8,72 +8,72 @@ import java.util.List;
 
 public class PropertyList {
 
-    private List<Property> properties = new ArrayList<Property>();
+  private List<Property> properties = new ArrayList<Property>();
 
-    public PropertyList(Class<?> clazz) {
-        init(clazz, null);
+  public PropertyList(Class<?> clazz) {
+    init(clazz, null);
+  }
+
+  public PropertyList(Class<?> clazz, List<List<String>> table) {
+    List<String> names = table.size() > 0 ? table.get(0) : null;
+    init(clazz, names);
+  }
+
+  private void init(Class<?> clazz, List<String> names) {
+    if (clazz == null && names == null)
+      properties.add(Property.Unknown);
+    else {
+      if (names == null)
+        names = getNamesFrom(clazz);
+
+      for (String name : names)
+        properties.add(new Property(name));
     }
+  }
 
-    public PropertyList(Class<?> clazz, List<List<String>> table) {
-        List<String> names = table.size() > 0 ? table.get(0) : null;
-        init(clazz, names);
-    }
+  public List<Property> getProperties() {
+    return properties;
+  }
 
-    private void init(Class<?> clazz, List<String> names) {
-        if (clazz == null && names == null)
-            properties.add(Property.Unknown);
-        else {
-            if (names == null)
-                names = getNamesFrom(clazz);
+  public List<String> getNames() {
+    List<String> names = new ArrayList<String>();
 
-            for (String name : names)
-                properties.add(new Property(name));
-        }
-    }
+    for (Property property : properties)
+      names.add(property.getName());
 
-    public List<Property> getProperties() {
-        return properties;
-    }
+    return names;
+  }
 
-    public List<String> getNames() {
-        List<String> names = new ArrayList<String>();
+  public List<List<Object>> getValues(List<Object> objects) {
+    List<List<Object>> values = new ArrayList<List<Object>>();
 
-        for (Property property : properties)
-            names.add(property.getName());
+    if (objects == null)
+      values.add(getValues((Object) null));
+    else
+      for (Object object : objects)
+        values.add(getValues(object));
 
-        return names;
-    }
+    return values;
+  }
 
-    public List<List<Object>> getValues(List<Object> objects) {
-        List<List<Object>> values = new ArrayList<List<Object>>();
+  private List<Object> getValues(Object object) {
+    List<Object> values = new ArrayList<Object>();
 
-        if (objects == null)
-            values.add(getValues((Object) null));
-        else
-            for (Object object : objects)
-                values.add(getValues(object));
+    for (Property property : properties)
+      values.add(property.getValue(object));
 
-        return values;
-    }
+    return values;
+  }
 
-    private List<Object> getValues(Object object) {
-        List<Object> values = new ArrayList<Object>();
+  private static List<String> getNamesFrom(Class<?> clazz) {
+    List<String> names = new ArrayList<String>();
 
-        for (Property property : properties)
-            values.add(property.getValue(object));
+    if (clazz == null)
+      names.add(Property.unknownName);
+    else
+      for (Method method : ReflectionUtil.getGetters(clazz))
+        names.add(gracefulPropertyName(method));
 
-        return values;
-    }
-
-    private static List<String> getNamesFrom(Class<?> clazz) {
-        List<String> names = new ArrayList<String>();
-
-        if (clazz == null)
-            names.add(Property.unknownName);
-        else
-            for (Method method : ReflectionUtil.getGetters(clazz))
-                names.add(gracefulPropertyName(method));
-
-        return names;
-    }
+    return names;
+  }
 }

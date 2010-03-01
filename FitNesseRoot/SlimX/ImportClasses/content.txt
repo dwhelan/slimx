@@ -6,7 +6,7 @@ This table will search files and jars specified in the class path for public con
 The first cell in each row of the table specifies a package name to import for searching for system variable classes.
 The second cell in each row is optional and specifies a specific class in the package to import.
 !3 Load all classes from a package
-This table will import all classes in the ''jfitnesse.slim'' package.
+This table will import all classes in the ''fitnesse.slim'' package.
 
 !|table:import classes|
 |fitnesse.slim|
@@ -15,7 +15,7 @@ If you want to specify multiple classes in the package you can leave the first c
 
 !|table:import classes|
 |fitnesse.slim|ConverterSupport|
-||ConverterTest|
+||Library|
 
 You cannot import all classes in package that are loaded with the Java VM. You must explicitly specify the classes to load.
 

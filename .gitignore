@@ -1,12 +1,6 @@
-/.classpath
-/.project
-/.settings
 *.svn
 *.log
-FitNesseRoot/DriveSyncAcceptanceTests
 FitNesseRoot/ErrorLogs
 FitNesseRoot/files/testResults
-src/main/java/com
-target
-
-/fitnesse.jar
+classes
+test-results

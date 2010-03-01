@@ -1,21 +1,35 @@
-This [[script][http://fitnesse.org/FitNesse.UserGuide.SliM.ScriptTable]] table allows you to generate the contents for a [[Check Variable][CheckVariable] table for a variable.
+This [[script][http://fitnesse.org/FitNesse.UserGuide.SliM.ScriptTable]] table allows you to generate the contents for a [[Check Variable][CheckVariable]] table for a variable.
 
-You would you this is if you were using a [[Show Variable][Show Variable]] table and wanted to convert the table into a [[Check Variable][CheckVariable] so that the results would be verified.
+You would you this is if you were using a [[Show Variable][Show Variable]] table and wanted to convert the table into a [[Check Variable][CheckVariable=] so that the results would form a regression test.
 You may find this useful if you want to automate an exploratory test or if you want to generate characterization tests.
 
-The cell that follow '''create check object''' specifies the variable that you want to check.
+The cell that follow '''create check variable''' specifies the variable that you want to check.
 
 When executed a cell will be generated that contains the generated wiki text for checking the variable with instructions on how to use it.
+!3 Using this table
+Let's say I doing some exploratory testing and I am examining a variable like this:
 
 |table:show variable|$foo|
 |field 1|field 2|
 
-Hmmm that looks right, now I would like to create a regression test for that.
+I run this and all everything looks right. Now I would like to create a regression test for that. I would change the word ''show'' in the above table to ''create check'' like this:
 
-If I want to check all the properties I would change the word ''show'' in the above table to ''create check'' like this:
-
+#|comment|
 |table:create check variable|$foo|
 |field 1|field 2|
 
-|table:create check variable|$fooBar|elements|
+When run, an additional row will be created with the wiki text that you can use as regression test. It will look something like:
+{{{|query: check variable|$variable|
 |field 1|field 2|
+|foo|0.0|}}} I can replace the original ''show variable'' table with this one being sure to replace ''$variable'' with the variable name that I wish to test:
+{{{|query: check variable|$foo|
+|field 1|field 2|
+|foo|0.0|}}} The net result will be a table like this:
+
+|query: check variable|$foo|
+|field 1|field 2|
+|foo|0.0|
+!3 Creating check tables for lists
+Simply add a cell with ''elements'' after the variable cell and the generated wiki code will check all elements of the list:
+
+|table:create check variable|$fooBar|elements|

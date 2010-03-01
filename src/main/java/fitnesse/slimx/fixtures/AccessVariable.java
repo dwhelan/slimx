@@ -4,11 +4,11 @@ import fitnesse.slim.SystemUnderTest;
 
 public class AccessVariable extends ObjectTable {
 
-    @SystemUnderTest
-    public Object object;
+  @SystemUnderTest
+  public Object object;
 
-    public AccessVariable(Object object) {
-        super(object);
-        this.object = object;
-    }
+  public AccessVariable(Object object) {
+    super(object);
+    this.object = object;
+  }
 }

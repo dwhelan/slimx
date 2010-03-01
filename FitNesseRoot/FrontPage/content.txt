@@ -1,11 +1,22 @@
-!img-l http://files/images/logo-drivesync.jpg
+!-SlimX provides simple fixtures that all you to run FitNesse acceptance tests without having to write fixtures.
+SlimX extends FitNesse/Slim variables to be of any type - not just Strings. The SlimX fixtures use these variables to allow direct access to the system under test. -!
 
+[[SlimX acceptance tests][SlimX]]
+!3 Classes
+The following fixtures allow you to access and inspect classes:
 
+|[[Import Classes][SlimX.ImportClasses]]|Allows you to specify variable classes without a package name in your tables. You can also remove imported classes and show all imported classes.|
+|[[Show Class][SlimX.ShowClass]]|Shows properties, constructors and methods of a class. Useful when authoring acceptance tests so you can see what properties, functions and constructors are available.|
+!3 Variables
+The following fixtures allow you to create, access, show and check variables:
 
-
-
-
-!- This wiki contains the FitNesse acceptance tests for DriveSync Release 4.0.-!
-
-DriveSyncAcceptanceTests
-SlimX
+|[[Create Variable][SlimX.CreateVariable]]|Creates variables of arbitrary classes.|
+|[[Access Variable][SlimX.AccessVariable]]|Provides access to variables for calling functions and checking.|
+|[[Show Variable][SlimX.ShowVariable]]|Shows properties of variables. Useful for exploratory testing or simply showing information that supports an acceptance test.|
+|[[Check Variable][SlimX.CheckVariable]]|Check the properties of a variable.|
+|[[Create Check Variable][SlimX.CreateCheckVariable]]|Creates the wiki text for a [[Check Variable][SlimX.CheckVariable]] of a variable from a [[Show Variable][SlimX.ShowVariable]] table. Used to convert exploratory tests into regression tests.|
+!3 Properties
+Properties are obtained from the variables following the normal Java ''getter'' convention.
+For example, every variable has a ''class'' property because every Java object has a ''getClass()'' method.
+!3 Functions
+The [[Create Variable][SlimX.CreateVariable]] and [[Access Variable][SlimX.ShowVariable]] script tables set the System Under Test object to the specified variable so that you can invoke any public method on a variable.

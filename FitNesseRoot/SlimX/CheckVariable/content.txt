@@ -1,4 +1,4 @@
-This [[query table][http://fitnesse.org/FitNesse.UserGuide.SliM.QueryTable]] allows you to check that the values of fields are as expected.
+This [[query table][http://fitnesse.org/FitNesse.UserGuide.SliM.QueryTable]] allows you to check an object's properties.
 
 |query:check variable|$foo|
 |field 1|field 2|

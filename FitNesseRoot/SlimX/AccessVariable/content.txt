@@ -1,6 +1,8 @@
 This [[script table][http://fitnesse.org/FitNesse.UserGuide.SliM.ScriptTable]] allows you to access variables.
 
-When you run this table simply sets the !-SystemUnderTest-! to be the provided variable so you can use standard script table features to access it.
+After the ''access variable'' cell add another cell with the variable you want to access.
+
+This table sets the !-SystemUnderTest-! to be the variable so you can use standard script table features to access it.
 
 |script|access variable|$foo|
 |ensure|equals|$foo|

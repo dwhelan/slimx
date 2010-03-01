@@ -2,16 +2,26 @@ This [[table table][http://fitnesse.org/FitNesse.UserGuide.SliM.TableTable]] all
 
 When run this table will show properties of the variable. This is useful for exploratory testing and debugging your acceptance tests.
 
+If the variable has not been assigned a value then the following will be shown:
+
+|table:show variable|$not_assigned|
+
 !3 Show properties of a variable
-If the table has a second row then only those properties will be shown.
+If the table has a second row then only those properties will be shown:
 
 |table:show variable|$foo|
 |field 1|field 2|
 !3 Show all properties of a variable
-If the table does not have a second row then all properties will be shown.
+If the table does not have a second row then all properties will be shown:
 
 |table:show variable|$foo|
+
 !3 Show all elements of a list variable
 If the variable is a list you can display all the elements of by adding a cell with 'elements' in it.
+
+|table:show variable|$fooBar|elements|
+
+!|script|create variable|
+|$fooBar=|create|java.util.ArrayList|
 
 |table:show variable|$fooBar|elements|

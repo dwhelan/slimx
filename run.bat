@@ -1,0 +1,1 @@
+java -Xmx100M -cp lib\fitnesse-20100103.jar fitnesseMain.FitNesseMain -o -e 0 -p 8091 -r FitNesseRoot
